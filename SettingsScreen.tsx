@@ -16,7 +16,7 @@ import { fmt } from './money.ts';
 import { WEEKDAYS_SHORT, addDays, fmtDate, stamp } from './time.ts';
 import type { BudgetSettings, Category, Income, Kop, MicroItem, Obligation, ObligationKind, Settings, Theme } from './types.ts';
 
-export const APP_VERSION = '1.0.0';
+export const APP_VERSION = '1.0.1';
 
 function PageHead(p: { title: string; sub?: string }): HTMLElement {
   return (

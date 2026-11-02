@@ -1,8 +1,19 @@
 /* Сервіс-воркер ДЕНЬ × 365: офлайн-доступ після першого завантаження.
    Кешуються лише файли застосунку. Особисті дані живуть в IndexedDB і під час оновлення не зачіпаються.
-   Під час збирання (npm run build) сюди підставляються версія й перелік файлів. */
-const VERSION = '__VERSION__';
-const ASSETS = __ASSETS__;
+   Два рядки нижче (VERSION і ASSETS) переписує build.mjs під час «npm run build»; решту можна правити вручну. */
+const VERSION = "den365-e89a18ea72";
+const ASSETS = [
+  "./",
+  "./index.html",
+  "./app.js?v=e89a18ea72",
+  "./styles.css?v=e89a18ea72",
+  "./manifest.webmanifest",
+  "./favicon.svg",
+  "./icon-192.png",
+  "./icon-512.png",
+  "./icon-maskable-512.png",
+  "./apple-touch-icon.png"
+];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(

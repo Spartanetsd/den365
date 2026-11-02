@@ -130,6 +130,10 @@ h1, h2, h3, p { margin: 0; }
 
 .boot { min-height: 100vh; min-height: 100dvh; display: grid; place-content: center; justify-items: center; gap: 12px; color: var(--ink-2); font: 700 17px var(--font-num); letter-spacing: 0.02em; }
 .boot-mark { width: 52px; height: 52px; border-radius: 16px; background: var(--ink); color: var(--bg); display: grid; place-items: center; }
+.boot-fail { padding: 24px; text-align: center; font: 400 15px/1.45 var(--font); letter-spacing: 0; }
+.boot-fail b { color: var(--ink); font-size: 19px; font-weight: 700; }
+.boot-fail p { max-width: 36ch; margin: 0; }
+.boot-fail .btn { margin-top: 6px; padding: 0 22px; }
 
 /* ── Каркас ────────────────────────────────────────────────────────────── */
 

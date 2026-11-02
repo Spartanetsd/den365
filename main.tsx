@@ -2,6 +2,13 @@
 import { mountApp } from './App.tsx';
 import { initStore } from './store.ts';
 
+declare global {
+  interface Window {
+    /** Позначка для сторожа запуску в index.html: застосунок стартував. */
+    den365Ready?: boolean;
+  }
+}
+
 async function start(): Promise<void> {
   const root = document.getElementById('app');
   if (!root) return;
@@ -11,6 +18,7 @@ async function start(): Promise<void> {
     console.error(e);
   }
   mountApp(root);
+  window.den365Ready = true;
 }
 
 void start();

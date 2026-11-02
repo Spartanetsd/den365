@@ -1,5 +1,8 @@
-# Збирання й публікація «ДЕНЬ × 365» на GitHub Pages після кожного push у main.
-# Цей файл має лежати за шляхом .github/workflows/deploy.yml (див. README, крок 4).
+# НЕОБОВ'ЯЗКОВО. Публікація через GitHub Actions: перед кожним оприлюдненням — тести й свіже збирання.
+# Основний шлях цього файла не потребує: готові .js уже лежать у репозиторії, тож достатньо
+# Settings → Pages → Source: Deploy from a branch → main, / (root).
+# Щоб перейти на Actions (зручніше з комп'ютера): поклади цей файл за шляхом .github/workflows/deploy.yml
+# і в Settings → Pages обери Source: GitHub Actions.
 name: Deploy to GitHub Pages
 
 on:
@@ -36,11 +39,14 @@ jobs:
       - name: Збирання
         run: npm run build
 
+      - name: Файли сайту в _site
+        run: node build.mjs --site
+
       - uses: actions/configure-pages@v5
 
       - uses: actions/upload-pages-artifact@v4
         with:
-          path: dist
+          path: _site
 
   deploy:
     needs: build

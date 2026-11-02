@@ -15,12 +15,61 @@
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="icon" href="./favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
-  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./styles.css?v=e89a18ea72">
   <script>
     try {
       var t = localStorage.getItem('den365:theme');
       if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
     } catch (e) {}
+  </script>
+  <script>
+    // Сторож запуску. Якщо застосунок не стартував (файл не завантажився або сталася помилка),
+    // замість вічної заставки показує, що сталося, і кнопку «Оновити сторінку».
+    // Після успішного запуску app.js ставить window.den365Ready = true — і сторож більше не втручається.
+    (function () {
+      var final = false;
+      function show(title, detail, isFinal) {
+        if (final || window.den365Ready) return;
+        var app = document.getElementById('app');
+        if (!app) return;
+        final = !!isFinal;
+        var box = document.createElement('div');
+        box.className = 'boot boot-fail';
+        box.setAttribute('role', 'alert');
+        var b = document.createElement('b');
+        b.textContent = title;
+        var p = document.createElement('p');
+        p.textContent = detail;
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'btn btn-primary';
+        btn.textContent = 'Оновити сторінку';
+        btn.onclick = function () { location.reload(); };
+        box.appendChild(b);
+        box.appendChild(p);
+        box.appendChild(btn);
+        app.innerHTML = '';
+        app.appendChild(box);
+      }
+      addEventListener('error', function (e) {
+        var el = e.target;
+        if (el && el.tagName === 'SCRIPT') {
+          var name = String(el.src || '').split('?')[0].split('/').pop() || 'app.js';
+          show('Застосунок не завантажився',
+            'Не вдалося отримати файл ' + name + '. Якщо сайт щойно оновлювався, зачекай хвилину й онови сторінку. ' +
+            'Якщо не минає — цього файла немає в репозиторії: завантаж його туди з архіву.', true);
+          return;
+        }
+        if (e.message) show('Застосунок не запустився', 'Помилка: ' + e.message, true);
+      }, true);
+      addEventListener('unhandledrejection', function (e) {
+        var r = e.reason;
+        show('Застосунок не запустився', 'Помилка: ' + (r && r.message ? r.message : String(r)), true);
+      });
+      setTimeout(function () {
+        show('Завантаження затяглося', 'Перевір з’єднання з інтернетом і онови сторінку.', false);
+      }, 20000);
+    })();
   </script>
 </head>
 <body>
@@ -33,6 +82,6 @@
   <noscript>
     <p style="padding:24px;font:16px/1.5 system-ui">Для роботи застосунку потрібен увімкнений JavaScript.</p>
   </noscript>
-  <script type="module" src="./main.js"></script>
+  <script defer src="./app.js?v=e89a18ea72"></script>
 </body>
 </html>

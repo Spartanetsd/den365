@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "outDir": "dist",
+    "removeComments": true
+  },
+  "include": ["*.ts", "*.tsx"],
+  "exclude": ["*.test.ts", "node-test.d.ts", "node_modules", "dist"]
+}
